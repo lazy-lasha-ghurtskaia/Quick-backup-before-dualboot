@@ -1,0 +1,81 @@
+----------------------Lecture 1-----------------------------
+what is a program?
+	A set of instructions to the computer written ina programming language. 
+	Has input and output.
+
+what is a programming language?
+	Formal way to communicate instructions to the computer.
+
+why are they created this way?
+	to be understandable to humans but be precise for computers.
+
+what purpose should a programming language serve?
+	be expressive in at least one domain. stability, performance, evolution.
+
+categorization of programming languages:
+	imperative:   oop ("how-to" instructions)
+	declarative:  functional ("what" instructions)
+	hybrid:       both
+
+characteristics of programming languages:
+	typing: (strong vs weak); (static vs dynamic)
+
+	from code to execution:
+		1. to machine code
+		2. to byte code
+		3. transpile to other
+		4. interpret
+
+	memory management:
+		fully manual
+		garbage collection
+		ownership based
+		scope based
+typing:
+	STATIC: type checked at compile time, DYNAMIC: type redefined many times
+	STRONG: defined once and can't converte, WEAK: type can be converted 
+
+how to choose a programming language for a problem?
+	find what language is usually used for the problem. 
+	compare time-to-market/performance
+	check the community activity
+-------------------------------------------------------------
+
+
+-------------------------Lecture 2----------------------------
+why focus on the concepts of programming languages?
+	recogniza and apply common patterns
+	develop transferable skills for learning new languages
+	make more informed language selection decisions
+	enhance clearity and precision
+
+domains of application:
+	scientific and engineering computing
+	busieness and enterprise systems
+	AI or ML
+	web and distributed systems
+	embeded systems
+	oss libraries 
+
+language design methodologies and trade-offs:
+	influences:
+		computer architecture
+		growing software complexity
+		changing economics
+
+	paradigms:
+		set of abstractions to express ideas
+		make details transparent and reason on higher level
+
+	trade-offs:
+		reliability vs cost 
+		writability vs readability
+		performance vs adaptability vs reusability
+
+language design by implementation:
+	compilation
+	interpretation
+	hybrid / bytecode jit
+	preprocessor
+--------------------------------------------------------------
+

@@ -1,0 +1,4 @@
+set arp.spoof.targets <phone_ip>
+set net.sniff.filter host <phone_ip>
+arp.spoof on
+net.sniff on

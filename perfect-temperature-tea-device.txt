@@ -1,0 +1,3 @@
+temperature based drink generator
+specify how long you want to wait for the drink to cool down 
+and let the device mix the appropriate ammount of boiling and cold water

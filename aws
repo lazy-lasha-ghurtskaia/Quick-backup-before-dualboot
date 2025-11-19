@@ -1,0 +1,157 @@
+Presentation:
+
+AWS Cloud Storage
+student: Lasha Ghurtskaia
+instructor: Erekle Maghradze
+
+
+What we'll cover:
+	identify general requirements regarding storage from the perspective of any tech company
+	overview of how aws helps with these problems (more in depth as we go on)
+	Aws Storage services: Birds eye view
+	Deeper overview of aws storage services
+	2 real world case studes (conclude with)
+
+
+
+primary aws purpose and solution: provision of robust well engineered solutons designed for different requirements in mind so that the company doesn't have to spend time and money on engineering and maintaining their solution.
+
+general requirements from storage
+1. high performance and low latency
+	the social media, real-time gaming and financial tech requires performance intensive storage
+	AWS solution: EBS which provides high-performance block storage for EC2s, with regular and IOPS SSDs providing consistent low latency.
+
+2. scalability and cost-efficiency
+	tech companies need to scale their storage in order to adapt to varying demands in the most cost-effective way possible
+	AWS solution: S3 because it provides virtually unlimited scalability with pay-as-you-go pricing while S3 glacier is an even more cost effective option for archival of less often accessed data.
+
+3. high-throughput and sequential access
+	Big data, analytics or AI/ML systems that work on very large datasets
+	AWS solution: EFS which provides high throughput for analytic workloads and closely resembles already widely used distributed file systems like HDFS.
+
+4. high availability and disaster recovery
+	critical infrastructure that must stay online even during regional failures
+	AWS solution: S3 due to it's 11 9's (99.999999999%) of durability due to automatic replication across availability zones. EBS might also be applicable due to it's snapshots capability that uses S3.
+
+5. security and compliance
+	healthcare banking and covernment systems have strict security and complience requirements 
+	AWS solution: All aws storage services are apply because they support strong encription at-rest and in-transit, IAM-based permissions, activity logging with CloudTrail, and comply with major certifications like PCI-DSS, HIPAA and GDPR.
+
+
+now we are going to overview the services themselves a little more in depth
+birds eye view of aws storage services (image with all 4 main storage services). say a few words about each other before going in detil.
+S3: general purpose object storage
+	purpose: general purpose, highly available storage for any type of workload
+	access: very low response time and latency
+S3 glacier: archival storage built on S3
+	purpose: Very low cost storage for long term archiving and backups
+	access: retreival times take minutes to hours
+EBS: block storage for servers
+	purpose: high performance block storage for servers (like a hard drive)
+	access: can only be attached to a single ec2 instance. (no web api or url access)
+EFS: file storage for shared access
+	purpose: scalable network file system (like NFS or HDFS)
+	access: can be shared across hundreds of ec2 instances across availability zones
+
+
+
+all the fallowing are saas solutions developed and maintained by aws.
+most of aws services are designed to be highly scalable, available and durable so i won't be explicitly mentioning that every time.
+we won't be able to cover all details so i set out some of the things that better relate to problems listed before.
+
+S3 family:
+	The Amazon S3 family is the fundamental AWS object storage designed for any scale, durability, and accessibility.
+	S3 is a general purpose object storage that can serve a wide range of use cases like: websites, data lakes, mobile applications, etc. 
+
+		storage types:
+		S3 offers a range of different storage classes designed for different use cases. as you can see on the slide.
+		Frequent access:
+		S3 and S3 express one zone provide low latency for frequently accessed data. S3 offers redundant replication but S3 express offers lower latency for cheaper.
+		Variable access:
+		S3 intelligent-tiering which automatically transfers less frequently used data to cheaper storage services.
+		infrequent or archival: S3 standard-IA, one zone-IA, and S3 glacier options provide lower cost storage for data that's rarely retreived. with S3 glacier deep archive beeing the lowest cost option for long-term compliance archiving.
+			S3 standard
+			S3 intelligent-tiering
+			S3 standart-IA (standard infrequent access)
+			S3 one zone-IA (one zone infrequent access)
+			S3 express one zone-IA (one zone infrequent access)
+			S3 glacier
+			S3 glacier deep archive
+
+		data management:
+		aws also provides tools to make large-scale management easyer
+			lifecycles: automatically move or delete data based on age or access.
+			object lock: prevent deletion for a fixed time to protect critical data.
+			replication: copy data to other regions for lower latency or disaster recovery
+			batch operations: apply actions to many objects at once
+
+		pricing:
+		The Amazon S3 cost components are:
+		    Storage: The amount of data (in Gigabytes) that you store.
+			Requests and data retrievals: The number of data retrieval operations that you execute. Amazon typically factors in requests like SELECT, GET LIST, POST, COPY, PUT, etc.
+			Data transfer: The data transfer modes and regions.
+			Management and analytics: The types of storage management and analytics tools that you choose to adopt.
+			Replication: Cross-regional replication, replication time control, and same-region replication for S3.
+
+
+
+
+EBS (elastic block store):
+	AWS EBS provides scalable high performance block storage that can be used with EC2 instances for root or file system directoreies. It also provides automatic replication within it's availability zone and low latency for any workloads.
+	with ebs you can create and manage the two fundamental block storage resources:
+	EBS volumes: network storage for EC2 instances
+	EBS snapshots: point-in-time backups of EBS volumes
+		volume types:
+			general purpose SSD: balanced price and performance for most workloads.
+			provisioned IOPS SSD: highest-performance lowest-lancy option.
+			throughput optimized HDD: low cost HDDs for frequently accessed data
+			cold HDD: lowest cost HDDs for infrequently accessed data.
+
+	EBS features: 
+	AWS provides robust features for data management and protection:
+    	Snapshots: Create point-in-time backups that can be used to create new volumes
+    	Encryption: Automatic encryption of data at rest and in transit
+    	Elasticity: Resize volumes while in use with no downtime
+    	Multi-attach: Allow a single volume to be attached to multiple instances (io2/io1 only)
+
+	EBS pricing:
+	amazon EBS cost components are:
+		Storage: The amount of provisioned storage (in Gigabytes per month)
+    	IOPS: The number of provisioned IOPS for io2/io1 volumes
+    	Throughput: The amount of provisioned throughput for st1 and sc1 volumes
+    	Snapshots: The amount of storage used by your snapshots
+    	Data transfer: Data transfer between Availability Zones and to the internet
+	
+
+EFS (elastic file system):
+	AWS EFS is an elastic block-level storage with support for NFSv4.1 (network file system version 4) for seamless integration with existing systems that rely on shared storage using NFS or HDFS. 
+	EFS architecture: It allows for access across a single vpc, meaning multiple availability zones but not across regions.
+		storage classes:
+    		EFS Standard: For frequently accessed files with the highest durability
+    		EFS Infrequent Access (EFS IA): Cost-optimized for less frequently accessed files
+    		EFS Archive: Lowest cost storage for rarely accessed files with long-term retention needs
+
+	EFS resources:
+	    Mount targets: Network endpoints in your VPC subnets that allow EC2 instances to connect to your EFS file system. Each mount target provides an IP address and DNS name for accessing the file system.
+    	Access points: Application-specific entry points that enforce user identity, root directory, and operating system user/group for all file system requests.
+    	File systems: The primary resource that stores your files and directories in a hierarchical structure.
+    	Security groups: Control network traffic to and from your mount targets.
+
+	Data management features:
+	    Lifecycle management: Automatically moves files between storage classes based on access patterns
+	    Throughput modes: Bursting, Provisioned, and Elastic throughput modes to match performance needs
+	    Performance modes: General Purpose (default) and Max I/O for high-scale applications
+	    Encryption: Automatic encryption of data at rest and in transit using AWS KMS keys
+
+	EFS pricing: 
+	The Amazon EFS cost components are:
+    	Storage: Pay for the amount of file system storage used per month (GB-month) Different rates for Standard, Infrequent Access, and Archive storage classes
+    	Throughput: Pay for the amount of data read from Infrequent Access and Archive storage classes
+    	Provisioned throughput: Additional cost for provisioned throughput mode beyond baseline
+    	Data transfer: Data transfer between Availability Zones when accessing cross-AZ
+    	API requests: Cost for metadata operations (list, read, write directories)
+	
+
+Conclusion with
+Case study 1
+Case study 2

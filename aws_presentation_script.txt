@@ -1,0 +1,119 @@
+Presentation:
+
+AWS Cloud Storage
+student: Lasha Ghurtskaia
+instructor: Erekle Maghradze
+
+
+What we'll cover:
+	identify general requirements regarding storage from the perspective of any tech company
+	overview of how aws helps with these problems (more in depth as we go on)
+	Aws Storage services: Birds eye view
+	Deeper overview of aws storage services
+	2 real world case studes (conclude with)
+
+
+
+primary aws purpose and solution: provision of robust well engineered soluton designed for different requirements in mind so that the company doesn't have to spend time and money on engineering and maintaining their solution.
+
+general requirements from storage
+1. high performance and low latency
+	the social media, real-time gaming and financial tech requires performance intensive storage
+		requirement: meaning fast read and write speeds to serve milions of concurrent clients. (meaning requirement of complex intrastructure consisting of many servers working concurrently)
+		on-prem storage approach/need: high performance SSDs and in memory databases (like redis)
+		how aws helps: primary solution that aws provides is EBS which provides highly performant low-latency block storage which can be made even faster when provisioning IOPS SSDs for the most demanding databases and applications.
+
+2. scalability and cost-efficiency
+	tech companies need to be able to scale their storage in order to adapt to varying demands in the most cost-effective way possible
+		requirement: ability to increase storage capacity or throughput in the most cost-effective way
+		on-prem storage approach/need: purchase and maintain new or decomission redundant storage 
+		how aws helps: primary solution that aws provides is the S3 because it provides virtually unlimited scalability with the added durability due to automatic replication (S3 glacier might also be applicable for extreme cost savings on less important data).
+
+3. high-throughput and sequential access
+	main example of this might be Big data, analytics or AI/ML systems that work on very large datasets
+		requirement: Extremely high throughput of GB/s for reading and writing to large datasets. unlike consumer services data analytics or AI/ML doesn't require low latency.
+		on-prem storage approach/need: often companies use distributed file systems like HDFS or object storage with many large HDDs.
+		how aws helps: primary solution that aws provides is the EFS which closely resembles already widely used distributed file systems like HDFS, but without the need of manual maintenance. S3 might also be applicable due to high throughput sequential access capabilities.
+
+4. high availability and disaster recovery
+	enterprise, e-commerce or any critical infrastructure has to always be available. 
+		requirement: this means that this infrastructure should provide maximum availability across different geographic regions and be backed-up in preparation to natual disasters (or any other accidents) be recoverable as soon as possible.
+		on-prem storage approach/need: in this case highly redundant setups with synchronous replication are required using both SSDs and HDDs.
+		how aws helps: primary solution that aws provides is the S3 due to it's 11 9's (99.999999999%) of durability due to automatic replication across availability zones. EBS might also be applicable due to it's snapshots capability that uses S3.
+
+5. security and compliance
+	main example might be healthcare banking and covernment systems provide critical societal nessesities and have strict security and complience requirements (the last requirement also applies to these)
+		requirement: strong encription at-rest and in-transit, strict access controls, and immutable logs. often need to meet regulations like GDPR, PCI-DSS, etc.
+		on-prem storage approach/need: often on-prem is the only available option regarding storage due to the need of complete control of every component of the storage solution. but can be with compliant cloud storage.
+		how aws helps: All aws storage services are applicable because they provde strong encription at-rest and in-transit, provide the ability to set strict control polcies with (IAM, or (bucket policies for s3)), enable action logging with CloudTrail, and comply with major certifications like PCI-DSS, HIPAA and GDPR.
+
+
+
+now we are going to overview the services themselves a little more in depth
+birds eye view of aws storage services (image with all 4 main storage services). say a few words about each other before going in detil.
+S3: general purpose object storage
+	purpose: general purpose, durable, highly available storage for any type of data workload
+	access: very low response time and latency
+S3 glacier: archival storage built on S3
+	purpose: Very low cost storage for long term archiving and backups
+	access: retreival times take minutes to hours
+EBS: block storage for servers
+	purpose: high performance block storage for servers(like a hard drive)
+	access: can only be attached to a single ec3 instance. (no web api or url access)
+EFS: file storage for shared access
+	purpose: scalable network file system (like NFS)
+	access: can be shared across hundreds of ec2 instances across availability zones
+
+
+
+all the fallowing are saas solutions developed and maintained by aws.
+most of aws services are designed to be highly scalable, available and durable so i won't be explicitly mentioning that every time.
+we won't be able to cover all details so i set out some of the things that better relate to problems listed before.
+
+S3 family:
+	we begin with the most general storage service that was developed before the others or are based on: S3 (simple storage service). 
+	S3 it is a saas solution developed and maintained by aws to provide object level storage in order to serve a wide range of use cases like: websites, data lakes, mobile applications, etc. 
+		storage types:
+		S3 offers a range of different storage classes designed for different use cases. as you can see on the slide.
+		For example, for frequently accessed data like the ones for social media applications and game servers is is best to use S3 standard or S3 express one zone. of these two S3 is the one that redundantly replicates information within the availability zone but S3 express one zone provides faster response times and is cheaper.
+		Also for data with unknown or changing access patterns it might be best to use S3 intelligent tiering which automatically transfers less frequently used data to cheaper storage services, more on this later.
+		And intuitively for infrequently accessed data it's best to use IA (infrequent access) types of services for more cost savings or S3 glacier if the data in question is rarely used and doesn't need quick retrieval times.
+			S3 standard
+			S3 intelligent-tiering
+			S3 standart-IA (standard infrequent access)
+			S3 one zone-IA (one zone infrequent access)
+			S3 express one zone-IA (one zone infrequent access)
+			S3 glacier
+			S3 glacier deep archive
+		storage management:
+		aws also supports object management functionality to automate management of large datasets
+		for example lifecycles can automatically move infrequently accessed files to any of the S3 storage classes for increased savings. object lock can help protect objects from beeing deleted or overwritten for specified ammount of time. manual replication can let you replicate your buckets across different aws regions (for less latency disaster recovery measures). and batch operations as name suggests lets you automate interraction with bucket objects instead of having to manually interract with them
+			lifecycles
+			object lock
+			replication
+			batch operations
+		access management and security:
+		pricing:
+
+
+EBS (elastic block store):
+	AWS EBS provides scalable high performance block storage that can be used with EC2 instances for root or file system directoreies. It also provides automatic replication within it's availability zone and low latency for any workloads.
+	with ebs you can create and manage the fallowing fundamental block storage resources:
+	EBS volumes: go over volume types
+	EBS snapshots: (as of resource)
+	EBS features: creation of snapshots; encription; elasticity;
+	EBS pricing:
+	
+
+EFS (elastic file system):
+	AWS EFS is an elastic block-level storage with support for NFSv4.1 (network file system version 4) for seamless integration with existing systems that rely on shared storage using NFS or HDFS. 
+	EFS architecture: It allows for access across a single vpc, meaning multiple availability zones but not across regions.
+	EFS resources:
+		mount targets:
+		keys:
+	EFS pricing: (to go over quickly. for the sake of completeness we will briefly go over pricing)
+	
+
+Conclusion with
+Case study 1
+Case study 2

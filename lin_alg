@@ -1,0 +1,11 @@
+vector space axioms
+transposition rules
+
+real inner product space axioms - lecture 5
+
+cauchy-shwartz; triangle; paralelogram inequalities (memorize)
+
+linear transformation axioms - lecture 6
+
+
+if matrix has zero row then the matrix is linearly dependent. But does that mean that we can obtain any vector with the linear combination of the zero row/vector?
